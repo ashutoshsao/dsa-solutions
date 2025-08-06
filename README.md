@@ -11,7 +11,7 @@ The solutions are organized into directories based on their primary topic. Each 
 *   [Arrays and Strings](./solutions/ArraysAndStrings)
 *   [Data Structures](./solutions/DataStructures)
 *   [Dynamic Programming](./solutions/DynamicProgramming)
-*   [Graphs](./solutions/Graphs)
+
 *   [Math and Number Theory](./solutions/MathAndNumberTheory)
 *   [Recursion](./solutions/Recursion)
 *   [Miscellaneous](./solutions/Miscellaneous)

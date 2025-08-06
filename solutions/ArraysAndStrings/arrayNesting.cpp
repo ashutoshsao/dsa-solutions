@@ -6,8 +6,6 @@
  * Time Complexity: O(n), as each element is visited exactly once.
  * Space Complexity: O(n) for the visited array. An O(1) space solution is possible by modifying the input array to mark visited elements.
  */
-// in this progrma we are checking for max length of a set in form
-// {arr[i],arr[arr[i]],arr[arr[arr[i]]],,}
 #include <bits/stdc++.h>
 using namespace std;
 

@@ -13,9 +13,6 @@
 * Time Complexity: O(n)
 * Space Complexity: O(1)
 */
-// in this program we are printing elements that have majority more then n/3
-// since n/3 only 2 can have accorign to math
-// we only track 3-1 = 2 elemtns
 #include <bits/stdc++.h>
 using namespace std;
 

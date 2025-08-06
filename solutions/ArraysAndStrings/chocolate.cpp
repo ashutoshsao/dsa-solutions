@@ -6,7 +6,6 @@
  * Time Complexity: O(n), where n is the number of segments in the chocolate bar.
  * Space Complexity: O(n) to store the array.
  */
-// program to split chocolate into pieces with exactly 1 1s in each
 #include <iostream>
 #include <vector>
 using namespace std;

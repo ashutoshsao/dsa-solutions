@@ -6,7 +6,6 @@ Approach: The solution uses a recursive approach. A helper function `buildSequen
 Time Complexity: The number of sequential numbers is small and constant. The generation of each number takes O(log k) where k is the number. The number of such numbers is small. Let's say it's N. Sorting these N numbers takes O(N log N).
 Space Complexity: O(N) to store the sequential numbers in the result vector.
 */
-// solution for https://leetcode.com/problems/sequential-digits/description/
 #include <algorithm>
 #include <iostream>
 #include <vector>
