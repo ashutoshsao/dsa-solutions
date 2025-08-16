@@ -14,4 +14,5 @@ The solutions are organized into directories based on their primary topic. Each 
 
 *   [Math and Number Theory](./solutions/MathAndNumberTheory)
 *   [Recursion](./solutions/Recursion)
+*   [Searching](./solutions/Searching)
 *   [Miscellaneous](./solutions/Miscellaneous)
