@@ -10,6 +10,8 @@
  * Time Complexity: O(10!)
  * Space Complexity: O(C), where C is the number of unique characters.
  */
+#include <bits/stdc++.h>
+using namespace std;
 
 class Solution {
 public:
@@ -102,3 +104,21 @@ private:
     return false;
   }
 };
+
+int main() {
+  Solution sol;
+
+  vector<string> words1 = {"SEND", "MORE"};
+  string result1 = "MONEY";
+  cout << (sol.isSolvable(words1, result1) ? "true" : "false") << endl;
+
+  vector<string> words2 = {"SIX", "SEVEN", "SEVEN"};
+  string result2 = "TWENTY";
+  cout << (sol.isSolvable(words2, result2) ? "true" : "false") << endl;
+
+  vector<string> words3 = {"LEET", "CODE"};
+  string result3 = "POINT";
+  cout << (sol.isSolvable(words3, result3) ? "true" : "false") << endl;
+
+  return 0;
+}
