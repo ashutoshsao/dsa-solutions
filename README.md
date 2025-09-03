@@ -24,4 +24,5 @@ To maintain a clean and predictable structure, this repository follows an **"Alg
 *   [Math and Number Theory](./solutions/MathAndNumberTheory)
 *   [Recursion](./solutions/Recursion)
 *   [Searching](./solutions/Searching)
+*   [Sorting](./solutions/Sorting)
 *   [Miscellaneous](./solutions/Miscellaneous)
