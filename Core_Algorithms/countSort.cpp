@@ -10,27 +10,40 @@ int main() {
   int n;
   cin >> n;
   vector<int> input(n);
+  // Read the input array
   for (int i = 0; i < n; i++) {
     cin >> input[i];
   }
 
+  // Find the maximum and minimum elements in the input array
+  // to determine the range of the frequency array.
   int maxn = INT_MIN, minn = INT_MAX;
   for (int i = 0; i < n; i++) {
     maxn = max(input[i], maxn);
     minn = min(input[i], minn);
   }
+  // Create a frequency array to store the count of each element.
+  // The size of the array is the range of the input values (max - min + 1).
   vector<int> freq(maxn - minn + 1, 0);
+  // Count the frequency of each element in the input array.
+  // We subtract 'minn' to handle negative numbers and to map the elements to the range [0, maxn - minn].
   for (int i = 0; i < n; i++) {
     freq[input[i] - minn]++;
   }
+  // Modify the frequency array to store the cumulative sum of frequencies.
+  // This will give us the correct position of each element in the sorted array.
   for (int i = 1; i <= maxn - minn; i++) {
     freq[i] += freq[i - 1];
   }
+  // Create a result array to store the sorted elements.
   vector<int> result(n);
+  // Build the result array by placing each element in its correct sorted position.
+  // We iterate from the end of the input array to maintain the stability of the sort.
   for (int i = n - 1; i >= 0; i--) {
     result[freq[input[i] - minn] - 1] = input[i];
     freq[input[i] - minn]--;
   }
+  // Print the sorted array.
   for (int i = 0; i < n; i++) {
     cout << result[i] << " ";
   }
