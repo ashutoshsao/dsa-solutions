@@ -1,5 +1,7 @@
 # DSA Solutions
 
+**Total Solutions: 85**
+
 This repository contains a collection of my solutions to various Data Structures and Algorithms problems from platforms like LeetCode, Codeforces, and others.
 
 ## How to Use
