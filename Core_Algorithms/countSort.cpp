@@ -1,8 +1,12 @@
 /*
 Algorithm: Counting Sort
-Approach: A non-comparison sorting algorithm that works by counting the number of objects having distinct key values. It is only efficient when the range of potential items in the input is not much larger than the number of items. The implementation handles a range of numbers by finding the min and max elements.
-Time Complexity: O(n + k) where n is the number of elements and k is the range of the input (max - min + 1).
-Space Complexity: O(k) to store the frequency array.
+Approach: A non-comparison sorting algorithm that works by counting the number
+of objects having distinct key values. It is only efficient when the range of
+potential items in the input is not much larger than the number of items. The
+implementation handles a range of numbers by finding the min and max elements.
+Time Complexity: O(n + k) where n is the number of elements and k is the range
+of the input (max - min + 1). Space Complexity: O(k) to store the frequency
+array.
 */
 #include <bits/stdc++.h>
 using namespace std;
@@ -26,7 +30,8 @@ int main() {
   // The size of the array is the range of the input values (max - min + 1).
   vector<int> freq(maxn - minn + 1, 0);
   // Count the frequency of each element in the input array.
-  // We subtract 'minn' to handle negative numbers and to map the elements to the range [0, maxn - minn].
+  // We subtract 'minn' to handle negative numbers and to map the elements to
+  // the range [0, maxn - minn].
   for (int i = 0; i < n; i++) {
     freq[input[i] - minn]++;
   }
@@ -37,8 +42,9 @@ int main() {
   }
   // Create a result array to store the sorted elements.
   vector<int> result(n);
-  // Build the result array by placing each element in its correct sorted position.
-  // We iterate from the end of the input array to maintain the stability of the sort.
+  // Build the result array by placing each element in its correct sorted
+  // position. We iterate from the end of the input array to maintain the
+  // stability of the sort.
   for (int i = n - 1; i >= 0; i--) {
     result[freq[input[i] - minn] - 1] = input[i];
     freq[input[i] - minn]--;
@@ -47,6 +53,5 @@ int main() {
   for (int i = 0; i < n; i++) {
     cout << result[i] << " ";
   }
-  cout << "
-";
+  cout << "\n";
 }
