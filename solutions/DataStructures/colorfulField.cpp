@@ -1,3 +1,11 @@
+/*
+Problem: Colorful Field
+Link: https://codeforces.com/problemset/problem/79/B
+Problem Statement: A rectangular field of size n x m is divided into 1x1 cells. Some of these cells are waste cells. The remaining cells are cultivated with crops. The crops are planted in the order: Carrots, Kiwis, Grapes, Carrots, Kiwis, Grapes, and so on. The cells are numbered from 1 to n*m, row by row. Given the coordinates of some cells, you need to determine what is planted in them.
+Approach: The solution uses a set to store the waste cells for efficient lookup. The 2D coordinates are flattened into a 1D index. For each query, it checks if the cell is in the waste set. If not, it calculates the number of waste cells that appear before the current cell. This is done by iterating through a sorted vector of waste cells. The adjusted index is then used to determine the crop type using the modulo operator.
+Time Complexity: O(k log k + t * k), where k is the number of waste cells and t is the number of queries. Sorting the waste cells takes O(k log k). Each query takes O(k) in the worst case to count the number of waste cells before it.
+Space Complexity: O(k) to store the waste cells.
+*/
 #include <bits/stdc++.h>
 using namespace std;
 
