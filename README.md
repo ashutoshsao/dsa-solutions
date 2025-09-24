@@ -2,7 +2,7 @@
 
 This repository contains a collection of my solutions to various Data Structures and Algorithms problems from platforms like LeetCode, Codeforces, and others.
 
-**Total Solutions: 86**
+**Total Solutions: 102**
 
 ## How to Use
 
@@ -36,5 +36,6 @@ To maintain a clean and predictable structure, this repository follows an **"Alg
     *   [Recursion](./solutions/Recursion)
     *   [Searching](./solutions/Searching)
     *   [Sorting](./solutions/Sorting)
+    *   [TwoPointers](./solutions/TwoPointers)
     *   [Miscellaneous](./solutions/Miscellaneous)
 
