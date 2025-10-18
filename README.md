@@ -2,8 +2,6 @@
 
 This repository contains a collection of my solutions to various Data Structures and Algorithms problems from platforms like LeetCode, Codeforces, and others.
 
-**Total Solutions: 102**
-
 ## How to Use
 
 The repository is organized into two main parts: Core Algorithm Implementations and Problem Solutions.
