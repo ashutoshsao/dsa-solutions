@@ -1,80 +1,119 @@
 /*
-Problem: D. Monitor
-Link: https://codeforces.com/problemset/problem/846/D
-Problem Statement: A monitor is represented by an n x m grid. The monitor is considered "broken" as soon as a k x k square consists entirely of broken pixels. You are given the dimensions n, m, the square size k, and a list of q pixels that will break. For each of these q pixels, you are given its coordinates (x, y) and the time t at which it breaks. The goal is to find the earliest moment in time when a k x k square of broken pixels is formed. If no such square is formed even after all q pixels have broken, you should report -1.
-Approach: The solution uses binary search on the time t. For a given time t, we can determine if a k x k square of broken pixels exists. This is done by creating a 2D prefix sum array. For a given time t, a cell is considered "good" (value 1) if its breaking time is less than or equal to t, and "bad" (value 0) otherwise. The prefix sum array helps to quickly calculate the sum of any k x k subgrid. If the sum of any k x k subgrid is equal to k*k, it means all pixels in that subgrid are broken, and the monitor is broken at time t. The binary search finds the minimum t for which this condition is met.
-Time Complexity: O(q + n * m * log(maxT)), where maxT is the maximum breaking time. The isBroken function takes O(n*m) and it is called log(maxT) times.
-Space Complexity: O(n*m) for the matrix and prefix sum array.
-*/
+ * Problem: Monitor
+ * Link: https://codeforces.com/problemset/problem/846/D
+ *
+ * Problem Statement:
+ * The problem asks to determine the earliest moment in time when an n x m monitor
+ * becomes "broken". The monitor is considered broken if it contains a k x k
+ * square composed entirely of non-functional pixels. You are given q pixels that
+ * will eventually break, along with their coordinates (xi, yi) and the specific
+ * time (ti) at which each pixel stops working.
+ *
+ * Approach:
+ * The solution uses binary search on the time 't' to find the minimum time the
+ * monitor becomes broken. For a given time 't', it checks if there is a k x k
+ * subgrid of broken pixels. This check is done efficiently using a 2D prefix
+ * sum array (also known as a summed-area table). The prefix sum array allows
+ * calculating the sum of pixels in any rectangular subgrid in O(1) time, after
+ * an O(n*m) preprocessing step. The overall approach is to first mark all
+ * pixels that are broken at or before time 't', then build the prefix sum
+ * array, and finally check all possible k x k subgrids.
+ *
+ * Time Complexity:
+ * The time complexity is O(log(max_t) * n * m), where max_t is the maximum
+ * possible time. The binary search takes O(log(max_t)) iterations, and in each
+ * iteration, the isBroken function takes O(n*m) time to build the prefix sums
+ * and check all submatrices.
+ *
+ * Space Complexity:
+ * The space complexity is O(n*m) for storing the grid and the prefix sum array.
+ */
 #include <bits/stdc++.h>
 using namespace std;
 
-bool isBroken(vector<vector<int>> &matrix, int T, int k) {
-  int n = matrix.size(), m = matrix[0].size();
-  vector<vector<int>> good(n, vector<int>(m, 0));
+struct Pixel {
+  int x, y, t;
+};
+
+int n, m, k, q;
+
+// Check if monitor is broken at time T (no extra padding arrays)
+bool isBroken(int T, const vector<Pixel> &points) {
+  static int grid[505][505];
+  static int pref[505][505];
+
+  // Reset grid
+  for (int i = 0; i < n; i++)
+    for (int j = 0; j < m; j++)
+      grid[i][j] = 0;
+
+  // Mark broken pixels (t <= T)
+  for (auto &p : points)
+    if (p.t <= T)
+      grid[p.x][p.y] = 1;
+
+  // Build prefix sums (fully 0-indexed)
   for (int i = 0; i < n; i++) {
     for (int j = 0; j < m; j++) {
-      good[i][j] = (matrix[i][j] <= T) ? 1 : 0;
-    }
-  }
-  vector<vector<int>> pref(n, vector<int>(m, 0));
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j < m; j++) {
-      pref[i][j] = good[i][j];
+      int sum = grid[i][j];
       if (i > 0)
-        pref[i][j] += pref[i - 1][j];
+        sum += pref[i - 1][j];
       if (j > 0)
-        pref[i][j] += pref[i][j - 1];
+        sum += pref[i][j - 1];
       if (i > 0 && j > 0)
-        pref[i][j] -= pref[i - 1][j - 1];
+        sum -= pref[i - 1][j - 1];
+      pref[i][j] = sum;
     }
   }
 
-  // check all k×k blocks
-  for (int i = k - 1; i < n; i++) {
-    for (int j = k - 1; j < m; j++) {
-      int x1 = i - k + 1, y1 = j - k + 1;
-      int sum = pref[i][j];
-      if (x1 > 0)
-        sum -= pref[x1 - 1][j];
-      if (y1 > 0)
-        sum -= pref[i][y1 - 1];
-      if (x1 > 0 && y1 > 0)
-        sum += pref[x1 - 1][y1 - 1];
-
+  // Check all k×k submatrices
+  for (int i = 0; i + k - 1 < n; i++) {
+    for (int j = 0; j + k - 1 < m; j++) {
+      int x2 = i + k - 1, y2 = j + k - 1;
+      int sum = pref[x2][y2];
+      if (i > 0)
+        sum -= pref[i - 1][y2];
+      if (j > 0)
+        sum -= pref[x2][j - 1];
+      if (i > 0 && j > 0)
+        sum += pref[i - 1][j - 1];
       if (sum == k * k)
-        return true; // found a valid working block
+        return true; // Found full broken k×k block
     }
   }
+
   return false;
 }
 
 int main() {
-  int n, m, k, q;
   cin >> n >> m >> k >> q;
-  // define matrix
-  vector<vector<int>> matrix(n, vector<int>(m, INT_MAX));
+  vector<Pixel> points(q);
 
-  int maxT = 0;
+  int minT = INT_MAX, maxT = INT_MIN;
   for (int i = 0; i < q; i++) {
-    int x, y, t;
-    cin >> x >> y >> t;
-    --x;
-    --y; // convert to 0-based indexing
-    matrix[x][y] = t;
-    maxT = max(maxT, t);
+    cin >> points[i].x >> points[i].y >> points[i].t;
+    // Convert to 0-indexed
+    points[i].x--;
+    points[i].y--;
+    minT = min(minT, points[i].t);
+    maxT = max(maxT, points[i].t);
   }
 
-  int l = 0, h = maxT, ans = -1;
-  while (l <= h) {
-    int m = l + (h - l) / 2;
-    bool r = isBroken(matrix, m, k);
-    if (!r)
-      l = m + 1;
-    else {
-      ans = m;
-      h = m - 1;
+  sort(points.begin(), points.end(),
+       [](const Pixel &a, const Pixel &b) { return a.t < b.t; });
+
+  int left = minT, right = maxT, ans = -1;
+
+  while (left <= right) {
+    int mid = left + (right - left) / 2;
+    if (isBroken(mid, points)) {
+      ans = mid;
+      right = mid - 1;
+    } else {
+      left = mid + 1;
     }
   }
-  cout << ans << "\n";
+
+  cout << ans << '\n';
+  return 0;
 }
